@@ -3,8 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    //
+    use SoftDeletes;
+    
+    public $fillable = [
+        'title',
+        'price',
+        'description',
+        'category_id',
+        'path_img'
+    ];
+    //public $guarded = [];
 }
