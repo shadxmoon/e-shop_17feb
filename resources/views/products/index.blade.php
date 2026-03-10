@@ -18,27 +18,31 @@
     </header>
     <main>
         <div class="container mx-auto">
-            <h2>Каталог товаров</h2>
+            <h1>Каталог товаров</h1>
             <div>
-                @foreach ($products as $product)
-                    <div class="border mb-4 flex">
-                        <img class="w-28 h-full aspect-1 mr-4" src="{{ Vite::asset($product->path_img) }}" alt="{{ $product->title }}">
-                        <div>
-                            <a href="{{route('products.show',['product'=>$product])}}">
-                                <h3>{{ $product->title }}</h3>
-                            </a>
-                            <p>{{ $product->description }}</p>
-                            <p>{{ $product->price}}</p>
+                @foreach ($categories as $category)
+                <h2>{{$category->title}}</h2>
+                    @foreach ($category->products as $product)
+                        <div class="border mb-4 flex">
+                            <img class="w-28 h-full aspect-1 mr-4" src="{{ Vite::asset($product->path_img) }}" alt="{{ $product->title }}">
+                            <div>
+                                <a href="{{route('products.show',['product'=>$product])}}">
+                                    <h3>{{ $product->title }}</h3>
+                                </a>
+                                <p>{{ $product->description }}</p>
+                                <p>{{ $product->price}}</p>
+                                <p>{{ $product->category->title }}</p>
+                            </div>
+                            <div class="ml-auto">
+                                <a href="{{route('products.edit', ['product'=>$product]) }}">Редактировать</a>
+                                <form action="{{ route('products.destroy', ['product'=>$product]) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <input type="submit" value="Удалить">
+                                </form>
+                            </div>
                         </div>
-                        <div class="ml-auto">
-                            <a href="{{route('products.edit', ['product'=>$product]) }}">Редактировать</a>
-                            <form action="{{ route('products.destroy', ['product'=>$product]) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <input type="submit" value="Удалить">
-                            </form>
-                        </div>
-                    </div>
+                    @endforeach
                 @endforeach
             </div>
         </div>
