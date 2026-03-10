@@ -11,7 +11,9 @@ class ProductController extends Controller
 {
     public function index(){
         $products = Product::all(); //выбираем все строки из таблицы products
-        $categories = Category::all();
+        $categories = Category::where('id', '>=', 1)
+            ->orderBy('title', 'ASC')
+            ->get();
         return view('products.index', compact('products', 'categories'));
     }
     public function create(){
